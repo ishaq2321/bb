@@ -1,0 +1,22 @@
+Backbencher OS (bb) - Public Preview License Agreement
+
+Copyright (c) 2026 Backbencher
+
+1. GRANT OF LICENSE
+Backbencher grants you a non-exclusive, non-transferable, limited license to download, install, and use the pre-compiled binary executable ("Software") for personal, evaluation, or internal business purposes during the Public Preview period.
+
+2. RESTRICTIONS
+You may not:
+- Reverse engineer, decompile, disassemble, or attempt to derive the source code of the Software.
+- Modify, adapt, or create derivative works based upon the Software.
+- Distribute, rent, lease, or sublicense the Software to third parties.
+- Remove any copyright, trademark, or other proprietary notices from the Software.
+
+3. BRING YOUR OWN KEY (BYOK)
+The Software acts as a client interface to third-party Large Language Model (LLM) providers. You are solely responsible for obtaining, securing, and paying for access to these third-party services (e.g., OpenAI, Anthropic, Gemini) via your own API keys.
+
+4. TELEMETRY AND DATA
+The Software requires an active license key generated via backbencher.cc. The Software may periodically connect to Backbencher servers to validate license status (with a 7-day offline grace period). Your source code and prompts are processed locally or sent directly to your configured LLM provider; Backbencher does not collect your proprietary source code.
+
+5. DISCLAIMER OF WARRANTY
+THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
