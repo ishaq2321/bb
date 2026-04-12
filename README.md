@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://backbencher.cc/apple-touch-icon.png" width="128" alt="Backbencher OS Logo" />
+  <img src="logo.svg" width="128" alt="Backbencher OS Logo" />
   <h1>Backbencher OS (bb)</h1>
   <p><b>The Dual-Engine Codebase OS</b></p>
   <p>Stop AI from breaking your code. Surgical AST precision with a 100% local SQLite Brain.</p>

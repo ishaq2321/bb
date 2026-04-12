@@ -4,7 +4,7 @@ set -e
 # Backbencher OS Installer (macOS & Linux)
 # This script downloads the pre-compiled, standalone, obfuscated binary.
 
-VERSION="${VERSION:-v1.0.4-preview}"
+VERSION="${VERSION:-v1.0.5-preview}"
 REPO="ishaq2321/bb"
 
 echo "🚀 Installing Backbencher (bb) - The Dual-Engine Codebase OS..."
