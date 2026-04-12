@@ -4,7 +4,7 @@ set -e
 # Backbencher OS Installer (macOS & Linux)
 # This script downloads the pre-compiled, standalone, obfuscated binary.
 
-VERSION="v1.0.3"
+VERSION="v1.0.4-preview"
 REPO="ishaq2321/bb"
 
 echo "🚀 Installing Backbencher (bb) - The Dual-Engine Codebase OS..."
@@ -82,6 +82,7 @@ fi
 
 # 5. Install the binary
 mv "$TEMP_DIR/bb" "$INSTALL_DIR/bb"
+find "$TEMP_DIR" -name "vec0.*" -exec mv {} "$INSTALL_DIR/" \; 2>/dev/null || true
 chmod +x "$INSTALL_DIR/bb"
 
 # 6. Check if INSTALL_DIR is in PATH
