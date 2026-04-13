@@ -5,6 +5,11 @@ set -e
 # This script downloads the pre-compiled, standalone, obfuscated binary.
 
 VERSION="${VERSION:-v1.0.5-preview}"
+
+# Ensure VERSION starts with "v" (to match GitHub release tags)
+if [[ $VERSION != v* ]]; then
+    VERSION="v${VERSION}"
+fi
 REPO="ishaq2321/bb"
 
 echo "🚀 Installing Backbencher (bb) - The Dual-Engine Codebase OS..."
