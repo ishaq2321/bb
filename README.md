@@ -46,8 +46,12 @@ irm https://backbencher.cc/install.ps1 | iex
 * **Offline Mode:** Keep coding offline for up to 7 days.
 * **No Cloud Code:** Your source code never leaves your laptop. Only your prompt goes to the LLM.
 
-## 📦 About this Repository
+## 📦 About this Repository & Contact
 
 This repository serves as the public distribution hub for Backbencher binaries and issue tracking. The core source code for the proprietary Dual-Engine Codebase OS remains private to protect the AST logic engine and licensing models.
 
-Please use the [Issues](https://github.com/ishaq2321/bb/issues) tab to report bugs or request features!
+**Get in touch:**
+* **Bugs & Feature Requests:** Please use the [GitHub Issues](https://github.com/ishaq2321/bb/issues) tab.
+* **Support & General Info:** `support@backbencher.cc` or `info@backbencher.cc`
+* **Direct Contact:** `admin@backbencher.cc`
+* **Legal & Privacy:** `legal@backbencher.cc` or `privacy@backbencher.cc`
