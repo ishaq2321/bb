@@ -1,7 +1,7 @@
 # Backbencher Install Script for Windows
-# Version: 1.0.9-preview
+# Version: 1.0.10-preview
 
-$VERSION = "1.0.9-preview"
+$VERSION = "1.0.10-preview"
 $REPO = "ishaq2321/bb"
 $FILE = "bb-win-x64.exe"
 $DOWNLOAD_URL = "https://github.com/$REPO/releases/download/$VERSION/$FILE"

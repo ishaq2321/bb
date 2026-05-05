@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-VERSION="1.0.9-preview"
+VERSION="1.0.10-preview"
 REPO="ishaq2321/bb"
 
 echo "🚀 Installing Backbencher ${VERSION}..."
