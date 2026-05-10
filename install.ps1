@@ -1,7 +1,7 @@
-# Backbencher (bb) Installer - v1.0.11-preview
-# Run in PowerShell:irm https://github.com/ishaq2321/bb/releases/download/v1.0.11-preview/install.ps1 | iex
+# Backbencher (bb) Installer - v1.0.12-preview
+# Run in PowerShell:irm https://backbencher.cc/install.ps1 | iex
 
-$VERSION = "1.0.11-preview"
+$VERSION = "1.0.12-preview"
 $INSTALL_DIR = "$HOME\.local\bin"
 $TEMP_DIR = [System.IO.Path]::GetTempPath()
 $ARCH = $env:PROCESSOR_ARCHITECTURE
@@ -48,19 +48,21 @@ if (Test-Path $CHECKSUM_PATH) {
     $line = ($content -split "`n" | Where-Object { $_ -match "bb-windows-${ARCH_NAME}\.exe" }) | Select-Object -First 1
     if ($line) {
         $expected = ($line -split '\s+')[0]
-        $actual = (Get-FileHash $OUTPUT_PATH -Algorithm SHA256).Hash
+        $actual = (Get-FileHash -Algorithm SHA256 -Path $OUTPUT_PATH).Hash.ToLower()
         if ($expected -ne $actual) {
-            Write-Error "Checksum verification failed"
+            Write-Error "Checksum verification failed!"
+            Remove-Item $OUTPUT_PATH -ErrorAction SilentlyContinue
             exit 1
         }
-        Write-Host "Checksum verified" -ForegroundColor Green
+        Write-Host "✅ Checksum verified" -ForegroundColor Green
     }
 }
 
 # Install
-$INSTALL_PATH = Join-Path $INSTALL_DIR "bb.exe"
-Copy-Item $OUTPUT_PATH $INSTALL_PATH -Force
+$FINAL_PATH = Join-Path $INSTALL_DIR "bb.exe"
+Copy-Item -Path $OUTPUT_PATH -Destination $FINAL_PATH -Force
+Remove-Item $OUTPUT_PATH -ErrorAction SilentlyContinue
 
 Write-Host ""
-Write-Host "Installed to $INSTALL_DIR\bb.exe" -ForegroundColor Green
-Write-Host "Run: bb --version" -ForegroundColor Cyan
+Write-Host "✅ Installed to $FINAL_PATH" -ForegroundColor Green
+Write-Host "Run: bb --version"

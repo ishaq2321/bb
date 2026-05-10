@@ -1,36 +1,33 @@
-#!/bin/bash
-# Backbencher (bb) Installer - v1.0.11-preview
-
+#!/usr/bin/env bash
 set -e
 
-VERSION="1.0.11-preview"
+# Backbencher (bb) Installer - v1.0.12-preview
+VERSION="1.0.12-preview"
+REPO="ishaq2321/bb"
+
+echo "🚀 Installing Backbencher ${VERSION} for $(uname -s)..."
+
 INSTALL_DIR="${HOME}/.local/bin"
 TEMP_DIR=$(mktemp -d)
 ARCH=$(uname -m)
 OS=$(uname -s)
 
-# Detect architecture
 case "$ARCH" in
     x86_64)  ARCH_NAME="x64" ;;
     aarch64|arm64) ARCH_NAME="arm64" ;;
     *) echo "Unsupported architecture: $ARCH" && exit 1 ;;
 esac
 
-# Detect OS
 case "$OS" in
     Linux)  OS_NAME="linux" ;;
-    Darwin) OS_NAME="macos" ;;
-    MINGW*|MSYS*|CYGWIN*) OS_NAME="windows" ;;
+    Darwin) OS_NAME="darwin" ;;
     *) echo "Unsupported OS: $OS" && exit 1 ;;
 esac
 
 BINARY_NAME="bb-${OS_NAME}-${ARCH_NAME}"
-if [ "$OS_NAME" = "windows" ]; then
-    BINARY_NAME="bb-${OS_NAME}-${ARCH_NAME}.exe"
-fi
 
-RELEASE_URL="https://github.com/ishaq2321/bb/releases/download/v${VERSION}/${BINARY_NAME}"
-CHECKSUM_URL="https://github.com/ishaq2321/bb/releases/download/v${VERSION}/checksums.txt"
+RELEASE_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${BINARY_NAME}"
+CHECKSUM_URL="https://github.com/${REPO}/releases/download/v${VERSION}/checksums.txt"
 
 echo "Installing Backbencher (bb) v${VERSION} for ${OS_NAME}-${ARCH_NAME}..."
 
