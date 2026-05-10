@@ -1,4 +1,4 @@
-# Backbencher (bb) Installer - v1.0.12-preview
+# Backbencher (bb) Installer - v1.0.13-preview
 # Run in PowerShell:irm https://backbencher.cc/install.ps1 | iex
 
 $VERSION = "1.0.12-preview"

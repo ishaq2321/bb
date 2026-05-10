@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-# Backbencher (bb) Installer - v1.0.12-preview
-VERSION="1.0.12-preview"
+# Backbencher (bb) Installer - v1.0.13-preview
+VERSION="1.0.13-preview"
 REPO="ishaq2321/bb"
 
 echo "🚀 Installing Backbencher ${VERSION} for $(uname -s)..."
