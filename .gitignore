@@ -1,4 +1,8 @@
 bb-*
-!bb-*.gz
 !install.*
 !*.md
+!icon.svg
+!logo.svg
+!LICENSE
+!.github
+!docs
