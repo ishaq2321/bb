@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-# Backbencher (bb) Installer - v1.0.14-preview
 VERSION="1.0.16-preview"
 REPO="ishaq2321/bb"
 
@@ -25,39 +24,49 @@ case "$OS" in
 esac
 
 BINARY_NAME="bb-${OS_NAME}-${ARCH_NAME}"
+GZ_NAME="${BINARY_NAME}.gz"
 
-RELEASE_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${BINARY_NAME}"
+RELEASE_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${GZ_NAME}"
 CHECKSUM_URL="https://github.com/${REPO}/releases/download/v${VERSION}/checksums.txt"
 
 echo "Installing Backbencher (bb) v${VERSION} for ${OS_NAME}-${ARCH_NAME}..."
 
 mkdir -p "$INSTALL_DIR"
 
-# Download binary
+# Download gzipped binary
 if command -v curl >/dev/null 2>&1; then
-    curl -fsSL "$RELEASE_URL" -o "$TEMP_DIR/bb" || { echo "Download failed"; exit 1; }
+    curl -fsSL "$RELEASE_URL" -o "$TEMP_DIR/${GZ_NAME}" || { echo "Download failed"; exit 1; }
 elif command -v wget >/dev/null 2>&1; then
-    wget -q "$RELEASE_URL" -O "$TEMP_DIR/bb" || { echo "Download failed"; exit 1; }
+    wget -q "$RELEASE_URL" -O "$TEMP_DIR/${GZ_NAME}" || { echo "Download failed"; exit 1; }
 else
     echo "Neither curl nor wget found. Please install one of them."
     exit 1
 fi
 
-# Make executable
-chmod +x "$TEMP_DIR/bb"
+# Decompress
+gunzip -f "$TEMP_DIR/${GZ_NAME}" || { echo "Decompression failed"; exit 1; }
+chmod +x "$TEMP_DIR/${BINARY_NAME}"
 
-# Verify checksum if shasum available
+# Verify checksum if sha256sum available
 if command -v sha256sum >/dev/null 2>&1; then
     curl -fsSL "$CHECKSUM_URL" -o "$TEMP_DIR/checksums.txt" 2>/dev/null || true
     if [ -f "$TEMP_DIR/checksums.txt" ]; then
         cd "$TEMP_DIR"
-        sha256sum -c checksums.txt 2>/dev/null || echo "Checksum verification skipped"
+        # Extract the line for our binary
+        EXPECTED=$(grep "${GZ_NAME}" checksums.txt | awk '{print $1}')
+        if [ -n "$EXPECTED" ]; then
+            ACTUAL=$(sha256sum "${GZ_NAME}" | awk '{print $1}')
+            if [ "$EXPECTED" != "$ACTUAL" ]; then
+                echo "⚠️ Checksum mismatch! Expected: $EXPECTED Got: $ACTUAL"
+            fi
+        fi
         cd - >/dev/null
     fi
 fi
 
 # Install
-cp "$TEMP_DIR/bb" "$INSTALL_DIR/bb" && rm -rf "$TEMP_DIR"
+mv "$TEMP_DIR/${BINARY_NAME}" "$INSTALL_DIR/bb"
+rm -rf "$TEMP_DIR"
 
 echo ""
 echo "✅ Installed to $INSTALL_DIR/bb"
