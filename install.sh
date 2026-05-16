@@ -2,7 +2,7 @@
 set -e
 
 # Backbencher (bb) Installer - v1.0.14-preview
-VERSION="1.0.15-preview"
+VERSION="1.0.16-preview"
 REPO="ishaq2321/bb"
 
 echo "🚀 Installing Backbencher ${VERSION} for $(uname -s)..."
