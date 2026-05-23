@@ -1,64 +1,92 @@
 <div align="center">
-  <img src="logo.svg" width="128" alt="Backbencher OS Logo" />
+  <img src="logo.svg" width="128" alt="Backbencher Logo" />
   <h1>Backbencher (bb)</h1>
-  <p><b>The Dual-Engine Codebase OS</b></p>
-  <p>Stop AI from breaking your code. Surgical AST precision with 100% local SQLite Brain + AI-powered intelligence.</p>
+  <p><b>AST-Native Code Intelligence for AI</b></p>
+  <p>Index your entire codebase into a local SQLite brain. Give AI tools byte-precise access to symbols, call graphs, relationships, and cross-language intelligence across 39 languages.</p>
 
   <a href="https://backbencher.cc">Website</a> •
   <a href="https://backbencher.cc/docs">Documentation</a> •
-  <a href="https://backbencher.cc/privacy">Privacy Policy</a>
+  <a href="https://backbencher.cc/tools">All 15 Tools</a>
 </div>
 
 ---
 
 ## What is Backbencher?
 
-**bb** is an AI-powered CLI tool that understands your entire codebase. Unlike other AI coding tools that blindly modify files, bb uses:
+**bb** is a drop-in replacement for OpenCode that adds a **local brain database**. It parses your entire codebase using Tree-sitter AST parsing and stores every symbol, relationship, and import in a local SQLite database. 15 brain tools (`bb_*`) give the AI byte-precise, AST-aware access to your code — replacing grep, read, and edit entirely.
 
-1. **Local SQLite Brain** - Parses your entire codebase into a local database using Tree-sitter AST parsing
-2. **AI Intelligence Layer** - Pre-flight checks for test coverage, impact analysis, risk assessment, and cascading updates
+## Why Backbencher?
 
-**Result:** When you ask bb to rename a function, it:
-- Finds all callers automatically
-- Updates them all (not just the definition)
-- Won't let you break `buildAll()` when you rename `build()`
-- Blocks high-risk changes unless you explicitly approve
+| Standard AI Coding | With Backbencher |
+|---|---|
+| `grep -rn "fnName"` scans raw text | `bb_search` queries the AST index — instant, exact |
+| `read file.ts` loads entire file | `bb_select` returns ONLY the function's code — saves tokens |
+| `edit` does blind string replace | `bb_update` uses AST byte bounds, LSP validation, auto-cascade |
+| No idea who calls what | `bb_relationships` shows exact call graph |
+| Guesses about architecture | `bb_ask` does semantic search across entire codebase |
+| Cross-language? Hopeless | 39 language parsers, cross-language intelligence |
 
-## Key Features
+## Quick Start
 
-### 🧠 Codebase Intelligence
-- **30+ language parsers** via Tree-sitter (Dart, TypeScript, Python, Rust, Go, Java, etc.)
-- **Symbol relationships** - know exactly who calls whom
-- **Test coverage tracking** - knows which tests cover which functions
-- **Gravity scores** - PageRank-style importance ranking of your code
-
-### 🔄 Safe Refactoring (Cascade Update)
 ```bash
-bb update --symbolName "build" --newContent "Future<void> builder() async {}" --autoUpdateCallers true
-```
-- Automatically finds and updates all callers
-- **Fixed**: Won't accidentally rename `buildAll()` → `builderAll()`
-- Uses negative lookahead regex: `\bbuild(?![A-Za-z0-9_])\s*\(`
+# 1. Install
+curl -fsSL https://backbencher.cc/install.sh | bash
 
-### 🚫 Risk Blocking
+# 2. Go to your project and index
+cd your-project
+bb brain
+
+# 3. Load the skill (teaches AI to use brain tools)
+# In the bb TUI, type: /skills bb-tools
+# Or add to your config:
+bb skill install https://github.com/ishaq2321/bb/blob/main/skill/SKILL.md
+
+# 4. Chat with AI — it now uses bb_* tools
+```
+
+## The Brain
+
+Run `bb brain` once to index your project. The brain:
+
+- **39 languages**: TypeScript, Python, Rust, Go, Java, Dart, C/C++, Ruby, PHP, Swift, Kotlin, Scala, Elixir, Haskell, Lua, Zig, C#, F#, R, SQL, Bash, PowerShell, and more
+- **Symbols**: Every function, class, method, variable — with byte-precise boundaries
+- **Relationships**: Every call, import, export, inheritance — pre-computed
+- **Cross-language**: Tracks Python calling JavaScript, Dart calling Swift, etc.
+- **Incremental**: Only re-indexes changed files on subsequent runs
+- **Local & Private**: 100% on your machine, no data leaves
+
+## The Skill
+
+**Without the skill, bb is just another OpenCode.** The `bb-tools` skill teaches the AI to use the 15 brain tools for all source code operations.
+
+Load it once per project:
 ```bash
-bb update --symbolName "authenticate" --newContent "..." --force true
+# In bb TUI:
+/skills bb-tools
+
+# Or via CLI:
+bb skill install https://github.com/ishaq2321/bb/blob/main/skill/SKILL.md
 ```
-- bb **BLOCKS** high-risk operations by default
-- Shows test coverage, impact analysis, breaking change likelihood
-- You must pass `--force true` to override (after seeing the risks)
 
-### 📊 4-Pillar Intelligence System
-1. **Temporal** - Git history predictions (files edited together)
-2. **Test** - Coverage intelligence (which tests cover what)
-3. **Gravity** - Code importance ranking (most called = highest priority)
-4. **Patterns** - Anti-pattern detection (god classes, circular deps, dead code)
+The skill maps every natural operation to the correct brain tool:
 
-### 🔒 100% Local & Private
-- All code analysis happens locally
-- SQLite brain stored on YOUR machine
-- Bring your own API key (supports Anthropic, OpenAI, local models)
-- Works offline
+| You want to... | AI uses |
+|---|---|
+| Find a function | `bb_search` |
+| Read implementation | `bb_select` |
+| Edit code | `bb_update` |
+| Create new file | `bb_write` |
+| Delete symbol | `bb_delete` |
+| Insert code | `bb_insert` |
+| Rename everywhere | `bb_refactor` |
+| Find callers/callees | `bb_relationships` |
+| Ask architecture | `bb_ask` |
+| Check patterns | `bb_patterns` |
+| Security scan | `bb_security` |
+| Migration plan | `bb_migrate` |
+| Visualize deps | `bb_visualize` |
+| Check health | `bb_health` |
+| Reindex | `bb_refresh` |
 
 ## Installation
 
@@ -72,54 +100,31 @@ curl -fsSL https://backbencher.cc/install.sh | bash
 irm https://backbencher.cc/install.ps1 | iex
 ```
 
-## Quickstart
+### Manual Download
+Download the latest binary from [GitHub Releases](https://github.com/ishaq2321/bb/releases) for your platform:
+- `bb-linux-x64` — Linux x86_64
+- `bb-linux-arm64` — Linux ARM64
+- `bb-darwin-x64` — macOS Intel
+- `bb-darwin-arm64` — macOS Apple Silicon
+- `bb-windows-x64.exe` — Windows x64
 
 ```bash
-# 1. Navigate to your project
-cd your-project
-
-# 2. Index your brain (one-time, creates local SQLite database)
-bb brain index
-
-# 3. Ask questions about your codebase
-bb ask "why is our auth system structured this way?"
-
-# 4. Safely rename functions (updates all callers automatically)
-bb update --symbolName "build" --newContent "Future<void> builder() async {}" --autoUpdateCallers true
-
-# 5. Check relationships before changing
-bb relationships --target "processOrder" --analysisType callers
-
-# 6. Detect code issues
-bb patterns --analysisType violations
+chmod +x bb-* && sudo mv bb-* /usr/local/bin/bb
 ```
 
-## The Tools
+## Project Structure
 
-| Tool | Purpose |
-|------|---------|
-| `bb_update` | Modify code with surgical precision + cascade updates |
-| `bb_delete` | Remove symbols with cascading protection |
-| `bb_ask` | Ask architecture questions with verified answers |
-| `bb_relationships` | Query callers/callees/impact |
-| `bb_patterns` | Detect god classes, dead code, violations |
-| `bb_search` | Find symbols with semantic search |
-| `bb_select` | Read code with exact byte boundaries |
-| `bb_security` | Scan for vulnerabilities |
+- `.git` — Your git repository (used for project identification)
+- `~/.local/share/opencode/brain/` — Brain databases (one per project)
+- `~/.config/opencode/` — Global config, plugins, skills
+- `.opencode/skills/` — Project-level skills
 
 ## Version
 
-**Current: 1.0.9-preview**
-
-## About This Repository
-
-This is the public distribution hub for bb binaries and issue tracking.
-
-**Core source code** for the Dual-Engine Codebase OS remains private.
+**Current: 1.0.16-preview**
 
 ## Support
 
 - **Bugs & Features:** [GitHub Issues](https://github.com/ishaq2321/bb/issues)
 - **Support:** `support@backbencher.cc`
 - **General:** `info@backbencher.cc`
-- **Legal:** `legal@backbencher.cc`
