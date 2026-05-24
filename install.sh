@@ -78,16 +78,36 @@ if [ ! -f "$CONFIG_FILE" ]; then
 {
   "$schema": "https://backbencher.cc/config.json",
   "permission": {
-    "bb_write": "allow",
+    "bb_search": "allow",
+    "bb_select": "allow",
+    "bb_relationships": "allow",
     "bb_update": "allow",
     "bb_delete": "allow",
     "bb_insert": "allow",
+    "bb_write": "allow",
     "bb_refresh": "allow",
-    "bb_refactor": "allow"
+    "bb_health": "allow",
+    "bb_migrate": "allow",
+    "bb_refactor": "allow",
+    "bb_visualize": "allow",
+    "bb_ask": "allow",
+    "bb_security": "allow",
+    "bb_patterns": "allow"
   }
 }
 CONFEOF
-  echo "Default permission config created"
+  echo "Default config created with bb_* tool permissions"
+else
+  # Merge bb_* permissions into existing config
+  TMPFILE=$(mktemp)
+  node -e "
+    const fs = require('fs');
+    const cfg = JSON.parse(fs.readFileSync('$CONFIG_FILE','utf8'));
+    cfg.permission = cfg.permission || {};
+    const tools = ['bb_search','bb_select','bb_relationships','bb_update','bb_delete','bb_insert','bb_write','bb_refresh','bb_health','bb_migrate','bb_refactor','bb_visualize','bb_ask','bb_security','bb_patterns'];
+    tools.forEach(t => { if (!cfg.permission[t]) cfg.permission[t] = 'allow'; });
+    fs.writeFileSync('$TMPFILE', JSON.stringify(cfg, null, 2));
+  " 2>/dev/null && mv "$TMPFILE" "$CONFIG_FILE" || echo "Skipped config merge (no node)"
 fi
 
 echo "✅ Installed to $INSTALL_DIR/bb"

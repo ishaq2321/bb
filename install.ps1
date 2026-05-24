@@ -92,12 +92,21 @@ if (!(Test-Path $CONFIG_FILE)) {
 {
   "$schema": "https://backbencher.cc/config.json",
   "permission": {
-    "bb_write": "allow",
+    "bb_search": "allow",
+    "bb_select": "allow",
+    "bb_relationships": "allow",
     "bb_update": "allow",
     "bb_delete": "allow",
     "bb_insert": "allow",
+    "bb_write": "allow",
     "bb_refresh": "allow",
-    "bb_refactor": "allow"
+    "bb_health": "allow",
+    "bb_migrate": "allow",
+    "bb_refactor": "allow",
+    "bb_visualize": "allow",
+    "bb_ask": "allow",
+    "bb_security": "allow",
+    "bb_patterns": "allow"
   }
 }
 '@
