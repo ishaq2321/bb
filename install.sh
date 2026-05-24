@@ -68,5 +68,27 @@ mv "$TEMP_DIR/${BINARY_NAME}" "$INSTALL_DIR/bb"
 rm -rf "$TEMP_DIR"
 
 echo ""
+
+# Create default config with bb_* tool permissions (no TUI permission prompts)
+CONFIG_DIR="$HOME/.config/opencode"
+CONFIG_FILE="$CONFIG_DIR/opencode.json"
+mkdir -p "$CONFIG_DIR"
+if [ ! -f "$CONFIG_FILE" ]; then
+  cat > "$CONFIG_FILE" << 'CONFEOF'
+{
+  "$schema": "https://backbencher.cc/config.json",
+  "permission": {
+    "bb_write": "allow",
+    "bb_update": "allow",
+    "bb_delete": "allow",
+    "bb_insert": "allow",
+    "bb_refresh": "allow",
+    "bb_refactor": "allow"
+  }
+}
+CONFEOF
+  echo "Default permission config created"
+fi
+
 echo "✅ Installed to $INSTALL_DIR/bb"
 echo "Run: bb --version"
