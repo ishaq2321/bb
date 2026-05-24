@@ -18,7 +18,7 @@ if ($ARCH -eq "AMD64") {
 }
 
 $BINARY_NAME = "bb-${OS}-${ARCH_NAME}.exe"
-$GZ_NAME = "${BINARY_NAME}.gz"
+$GZ_NAME = "${BINARY_NAME}"
 $RELEASE_URL = "https://github.com/ishaq2321/bb/releases/download/v${VERSION}/${GZ_NAME}"
 $CHECKSUM_URL = "https://github.com/ishaq2321/bb/releases/download/v${VERSION}/checksums.txt"
 
@@ -30,9 +30,9 @@ if (!(Test-Path $INSTALL_DIR)) {
 }
 
 # Download gzipped binary
-$GZ_PATH = Join-Path $TEMP_DIR $GZ_NAME
+$BINARY_PATH = Join-Path $TEMP_DIR $BINARY_NAME
 try {
-    Invoke-WebRequest -Uri $RELEASE_URL -OutFile $GZ_PATH -UseBasicParsing
+    Invoke-WebRequest -Uri $RELEASE_URL -OutFile $BINARY_PATH -UseBasicParsing
 } catch {
     Write-Error "Download failed: $_"
     exit 1
@@ -82,5 +82,27 @@ Copy-Item -Path $OUTPUT_PATH -Destination $FINAL_PATH -Force
 Remove-Item $OUTPUT_PATH -ErrorAction SilentlyContinue
 
 Write-Host ""
+
+# Create default config with bb_* tool permissions (no TUI prompts)
+$CONFIG_DIR = "$HOME\.config\opencode"
+$CONFIG_FILE = "$CONFIG_DIR\opencode.json"
+if (!(Test-Path $CONFIG_DIR)) { New-Item -ItemType Directory -Path $CONFIG_DIR -Force | Out-Null }
+if (!(Test-Path $CONFIG_FILE)) {
+  $defaultConfig = @'
+{
+  "$schema": "https://backbencher.cc/config.json",
+  "permission": {
+    "bb_write": "allow",
+    "bb_update": "allow",
+    "bb_delete": "allow",
+    "bb_insert": "allow",
+    "bb_refresh": "allow",
+    "bb_refactor": "allow"
+  }
+}
+'@
+  Set-Content -Path $CONFIG_FILE -Value $defaultConfig
+}
+
 Write-Host "✅ Installed to $FINAL_PATH" -ForegroundColor Green
 Write-Host "Run: bb --version"
