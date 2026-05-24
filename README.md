@@ -39,7 +39,7 @@ bb brain
 # 3. Load the skill (teaches AI to use brain tools)
 # In the bb TUI, type: /skills bb-tools
 # Or add to your config:
-bb skill install https://github.com/ishaq2321/bb/blob/main/skill/SKILL.md
+bb skill install https://github.com/ishaq2321/bb/blob/master/skill/SKILL.md
 
 # 4. Chat with AI — it now uses bb_* tools
 ```
@@ -65,7 +65,7 @@ Load it once per project:
 /skills bb-tools
 
 # Or via CLI:
-bb skill install https://github.com/ishaq2321/bb/blob/main/skill/SKILL.md
+bb skill install https://github.com/ishaq2321/bb/blob/master/skill/SKILL.md
 ```
 
 The skill maps every natural operation to the correct brain tool:
