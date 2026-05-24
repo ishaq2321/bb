@@ -24,7 +24,7 @@ case "$OS" in
 esac
 
 BINARY_NAME="bb-${OS_NAME}-${ARCH_NAME}"
-GZ_NAME="${BINARY_NAME}.gz"
+GZ_NAME="${BINARY_NAME}"
 
 RELEASE_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${GZ_NAME}"
 CHECKSUM_URL="https://github.com/${REPO}/releases/download/v${VERSION}/checksums.txt"
@@ -44,7 +44,6 @@ else
 fi
 
 # Decompress
-gunzip -f "$TEMP_DIR/${GZ_NAME}" || { echo "Decompression failed"; exit 1; }
 chmod +x "$TEMP_DIR/${BINARY_NAME}"
 
 # Verify checksum if sha256sum available
