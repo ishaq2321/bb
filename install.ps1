@@ -114,4 +114,17 @@ if (!(Test-Path $CONFIG_FILE)) {
 }
 
 Write-Host "✅ Installed to $FINAL_PATH" -ForegroundColor Green
+# Install bb-tools skill
+Write-Host ""
+Write-Host "📋 Installing bb-tools skill..."
+$SKILL_DIR = "$env:USERPROFILE\.config\opencode\skills\bb-tools"
+New-Item -ItemType Directory -Force -Path $SKILL_DIR | Out-Null
+$SKILL_URL = "https://raw.githubusercontent.com/ishaq2321/bb/master/skill/SKILL.md"
+try {
+    Invoke-WebRequest -Uri $SKILL_URL -OutFile "$SKILL_DIR\SKILL.md"
+    Write-Host "✅ bb-tools skill installed"
+} catch {
+    Write-Host "⚠️  Download failed (use /skills bb-tools in TUI)"
+}
+
 Write-Host "Run: bb --version"

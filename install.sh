@@ -110,5 +110,18 @@ else
   " 2>/dev/null && mv "$TMPFILE" "$CONFIG_FILE" || echo "Skipped config merge (no node)"
 fi
 
+
+# Install bb-tools skill
+echo ""
+echo "📋 Installing bb-tools skill..."
+SKILL_DIR="${HOME}/.config/opencode/skills/bb-tools"
+mkdir -p "$SKILL_DIR"
+SKILL_URL="https://raw.githubusercontent.com/ishaq2321/bb/master/skill/SKILL.md"
+if command -v curl >/dev/null 2>&1; then
+    curl -fsSL "$SKILL_URL" -o "$SKILL_DIR/SKILL.md" && echo "✅ bb-tools skill installed" || echo "⚠️  Download failed (use /skills bb-tools in TUI)"
+elif command -v wget >/dev/null 2>&1; then
+    wget -q "$SKILL_URL" -O "$SKILL_DIR/SKILL.md" 2>/dev/null && echo "✅ bb-tools skill installed" || echo "⚠️  Download failed"
+fi
+
 echo "✅ Installed to $INSTALL_DIR/bb"
 echo "Run: bb --version"
