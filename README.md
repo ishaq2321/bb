@@ -121,7 +121,7 @@ chmod +x bb-* && sudo mv bb-* /usr/local/bin/bb
 
 ## Version
 
-**Current: 1.0.16-preview**
+**Current: 1.0.16**
 
 ## Support
 
