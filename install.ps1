@@ -1,7 +1,7 @@
 # Backbencher (bb) Installer - v1.0.16
 # Run in PowerShell:irm https://backbencher.cc/install.ps1 | iex
 
-$VERSION = "1.0.16"
+$VERSION = if ($env:VERSION) { $env:VERSION } else { "1.0.16" }
 $INSTALL_DIR = "$HOME\.local\bin"
 $TEMP_DIR = [System.IO.Path]::GetTempPath()
 $ARCH = $env:PROCESSOR_ARCHITECTURE
