@@ -30,7 +30,7 @@
 
 ```bash
 # 1. Install
-curl -fsSL https://backbencher.cc/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ishaq2321/bb/master/install.sh | bash
 
 # 2. Go to your project and index
 cd your-project
@@ -92,7 +92,7 @@ The skill maps every natural operation to the correct brain tool:
 
 ### macOS & Linux
 ```bash
-curl -fsSL https://backbencher.cc/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ishaq2321/bb/master/install.sh | bash
 ```
 
 ### Windows (PowerShell)
