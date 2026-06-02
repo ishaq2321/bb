@@ -2,122 +2,138 @@
   <img src="logo.svg" width="128" alt="Backbencher Logo" />
   <h1>Backbencher (bb)</h1>
   <p><b>AST-Native Code Intelligence for AI</b></p>
-  <p>Index your entire codebase into a local SQLite brain. Give AI tools byte-precise access to symbols, call graphs, relationships, and cross-language intelligence across 39 languages.</p>
+  <p>Index your entire codebase into a local SQLite brain. 25+ tools give AI byte-precise access to symbols, call graphs, relationships, and cross-language intelligence across 40+ languages.</p>
 
   <a href="https://backbencher.cc">Website</a> •
-  <a href="https://backbencher.cc/docs">Documentation</a> •
-  <a href="https://backbencher.cc/tools">All 15 Tools</a>
+  <a href="https://backbencher.cc/docs">Documentation</a>
 </div>
 
 ---
 
 ## What is Backbencher?
 
-**bb** is a drop-in replacement for OpenCode that adds a **local brain database**. It parses your entire codebase using Tree-sitter AST parsing and stores every symbol, relationship, and import in a local SQLite database. 15 brain tools (`bb_*`) give the AI byte-precise, AST-aware access to your code — replacing grep, read, and edit entirely.
-
-## Why Backbencher?
-
-| Standard AI Coding | With Backbencher |
-|---|---|
-| `grep -rn "fnName"` scans raw text | `bb_search` queries the AST index — instant, exact |
-| `read file.ts` loads entire file | `bb_select` returns ONLY the function's code — saves tokens |
-| `edit` does blind string replace | `bb_update` uses AST byte bounds, LSP validation, auto-cascade |
-| No idea who calls what | `bb_relationships` shows exact call graph |
-| Guesses about architecture | `bb_ask` does semantic search across entire codebase |
-| Cross-language? Hopeless | 39 language parsers, cross-language intelligence |
+**bb** parses your entire codebase using Tree-sitter AST parsing and stores every symbol, relationship, and import in a local SQLite database. 25+ brain tools (`bb_*`) give the AI byte-precise, AST-aware access to your code.
 
 ## Quick Start
 
 ```bash
-# 1. Install
+# Install
 curl -fsSL https://raw.githubusercontent.com/ishaq2321/bb/master/install.sh | bash
 
-# 2. Go to your project and index
+# Index your project
 cd your-project
-bb brain
+bb brain --force          # first time (~3 min for 4,000 files)
+bb brain                   # subsequent runs (seconds, incremental)
 
-# 3. Load the skill (teaches AI to use brain tools)
-# In the bb TUI, type: /skills bb-tools
-# Or add to your config:
-bb skill install https://github.com/ishaq2321/bb/blob/master/skill/SKILL.md
-
-# 4. Chat with AI — it now uses bb_* tools
-```
-
-## The Brain
-
-Run `bb brain` once to index your project. The brain:
-
-- **39 languages**: TypeScript, Python, Rust, Go, Java, Dart, C/C++, Ruby, PHP, Swift, Kotlin, Scala, Elixir, Haskell, Lua, Zig, C#, F#, R, SQL, Bash, PowerShell, and more
-- **Symbols**: Every function, class, method, variable — with byte-precise boundaries
-- **Relationships**: Every call, import, export, inheritance — pre-computed
-- **Cross-language**: Tracks Python calling JavaScript, Dart calling Swift, etc.
-- **Incremental**: Only re-indexes changed files on subsequent runs
-- **Local & Private**: 100% on your machine, no data leaves
-
-## The Skill
-
-**Without the skill, bb is just another OpenCode.** The `bb-tools` skill teaches the AI to use the 15 brain tools for all source code operations.
-
-Load it once per project:
-```bash
-# In bb TUI:
-/skills bb-tools
-
-# Or via CLI:
+# Load the skill (teaches AI to use brain tools)
 bb skill install https://github.com/ishaq2321/bb/blob/master/skill/SKILL.md
 ```
 
-The skill maps every natural operation to the correct brain tool:
+## What You Get
 
-| You want to... | AI uses |
-|---|---|
-| Find a function | `bb_search` |
-| Read implementation | `bb_select` |
-| Edit code | `bb_update` |
-| Create new file | `bb_write` |
-| Delete symbol | `bb_delete` |
-| Insert code | `bb_insert` |
-| Rename everywhere | `bb_refactor` |
-| Find callers/callees | `bb_relationships` |
-| Ask architecture | `bb_ask` |
-| Check patterns | `bb_patterns` |
-| Security scan | `bb_security` |
-| Migration plan | `bb_migrate` |
-| Visualize deps | `bb_visualize` |
-| Check health | `bb_health` |
-| Reindex | `bb_refresh` |
+After indexing, the AI gets 25+ brain tools:
+
+| Tool | What it does |
+|------|-------------|
+| `bb_search` | Instant AST-level symbol search |
+| `bb_select` | Read exact byte range of any symbol — saves tokens |
+| `bb_ask` | Semantic search across entire codebase (works offline, zero config) |
+| `bb_relationships` | Full call graph — trace callers, callees, imports across languages |
+| `bb_visualize` | Architecture map (interactive HTML + JSON export) |
+| `bb_update` | AST-precise edits with byte bounds + dry-run diff |
+| `bb_refactor` | Rename across all files with impact preview + dry-run |
+| `bb_insert` | Insert code at exact AST positions with dry-run |
+| `bb_delete` | Delete symbols with cascade detection |
+| `bb_write` | Create new files with proper scaffolding |
+| `bb_patterns` | Detect god classes, circular deps, feature envy, orphans, tight coupling (8 types) |
+| `bb_security` | Scan for SQL injection, XSS, hardcoded secrets, command injection (10+ vuln types) |
+| `bb_migrate` | Cross-language migration plans (30+ language pairs, effort/risk estimates) |
+| `bb_feature` | Multi-layer feature tracing — tracks a feature across all 4 languages |
+| `bb_health` | Codebase health dashboard (complexity, test coverage, patterns, taint flows) |
+| `bb_refresh` | Re-index changed files only |
+| `bb_trace` | Full call graph traversal with depth control |
+| `bb_impact` | Impact analysis — what breaks if this changes |
+| `bb_metrics` | Complexity, coupling, and maintainability metrics |
+| `bb_explain` | Natural language explanation of any symbol |
+| `bb_suggest` | AI-powered code suggestions based on patterns |
+| `bb_doc` | Generate documentation for symbols |
+| `bb_deps` | Dependency analysis — what does this depend on |
+| `bb_review` | Code review with pattern and security checks |
+| `bb_fix` | Suggest fixes for detected issues |
+| `bb_scan` | Full project scan with all detectors |
+
+**Every tool is AST-aware** — byte-precise boundaries, LSP-validated, cross-language by default.
+
+## Semantic Search — Zero Configuration
+
+`bb_ask` uses **embedded word vectors** that work offline with no setup:
+
+```
+$ bb brain --force
+...
+Generating semantic embeddings... 20,000 vectors (word vectors — offline)
+```
+
+The vocabulary adapts to your project — a Go microservice gets "grpc", "handler"; a game engine gets "shader", "render".
+
+**For higher quality (optional)**, add an API key to `bb.json`:
+
+```json
+{
+  "provider": { "openai": { "apiKey": "sk-..." } },
+  "embedding_model": "openai/text-embedding-3-small"
+}
+```
+
+Then `bb brain --post`. Supported: OpenAI, Azure, Mistral, Cohere, Google AI Studio, Google Vertex AI, NVIDIA NIM, or any OpenAI-compatible endpoint.
+
+## Configuration
+
+Config lives in `bb.json` at your project root. This file is **not created automatically** — create it only to configure providers or override defaults.
+
+```json
+{
+  "provider": {
+    "openai": { "apiKey": "sk-..." }
+  },
+  "embedding_model": "openai/text-embedding-3-small"
+}
+```
+
+## The Brain Database
+
+- **Location**: `~/.local/share/opencode/brain/<git-hash>/brain.db`
+- **Size**: ~700MB for 4,000 files / 588K symbols
+- **Incremental**: Only re-indexes changed files (hash-based detection)
+- **Force re-index**: `bb brain --force`
+- **Post-processing only**: `bb brain --post` (resolution + embeddings + patterns)
+
+## Supported Languages
+
+TypeScript, JavaScript, Python, Dart, Go, Rust, Java, Kotlin, Swift, C, C++, C#, F#, Ruby, PHP, Elixir, Haskell, Lua, Zig, Scala, R, SQL, Bash, PowerShell, HTML, CSS, JSON, YAML, TOML, XML, Markdown, Vue, Erlang, Objective-C, Perl — **40+ languages** via Tree-sitter parsers.
 
 ## Installation
 
-### macOS & Linux
 ```bash
+# macOS & Linux
 curl -fsSL https://raw.githubusercontent.com/ishaq2321/bb/master/install.sh | bash
-```
 
-### Windows (PowerShell)
-```powershell
+# Windows (PowerShell)
 irm https://backbencher.cc/install.ps1 | iex
-```
 
-### Manual Download
-Download the latest binary from [GitHub Releases](https://github.com/ishaq2321/bb/releases) for your platform:
-- `bb-linux-x64` — Linux x86_64
-- `bb-linux-arm64` — Linux ARM64
-- `bb-darwin-x64` — macOS Intel
-- `bb-darwin-arm64` — macOS Apple Silicon
-- `bb-windows-x64.exe` — Windows x64
-
-```bash
+# Manual (from releases)
+# Download from https://github.com/ishaq2321/bb/releases
 chmod +x bb-* && sudo mv bb-* /usr/local/bin/bb
 ```
 
-## Project Structure
+## Project Layout
 
-- `.git` — Your git repository (used for project identification)
-- `~/.local/share/opencode/brain/` — Brain databases (one per project)
-- `~/.config/opencode/` — Global config, plugins, skills
-- `.opencode/skills/` — Project-level skills
+| Path | Purpose |
+|------|---------|
+| `bb.json` | Project config (providers, embedding model) — create manually |
+| `~/.local/share/opencode/brain/` | Brain databases (one per git repo) |
+| `~/.config/opencode/` | Global config, plugins, skills |
+| `.opencode/skills/` | Project-level skills |
 
 ## Version
 
@@ -125,6 +141,5 @@ chmod +x bb-* && sudo mv bb-* /usr/local/bin/bb
 
 ## Support
 
-- **Bugs & Features:** [GitHub Issues](https://github.com/ishaq2321/bb/issues)
-- **Support:** `support@backbencher.cc`
-- **General:** `info@backbencher.cc`
+- [GitHub Issues](https://github.com/ishaq2321/bb/issues)
+- `support@backbencher.cc`
