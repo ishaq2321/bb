@@ -66,7 +66,7 @@ After indexing, the AI gets 25+ brain tools:
 
 ## Semantic Search — Zero Configuration
 
-`bb_ask` uses **embedded word vectors** that work offline with no setup:
+`bb_ask` uses **embedded word vectors** that work offline with no setup. The vocabulary adapts to your project automatically.
 
 ```
 $ bb brain --force
@@ -74,18 +74,52 @@ $ bb brain --force
 Generating semantic embeddings... 20,000 vectors (word vectors — offline)
 ```
 
-The vocabulary adapts to your project — a Go microservice gets "grpc", "handler"; a game engine gets "shader", "render".
-
 **For higher quality (optional)**, add an API key to `bb.json`:
 
+### OpenAI
 ```json
 {
   "provider": { "openai": { "apiKey": "sk-..." } },
   "embedding_model": "openai/text-embedding-3-small"
 }
 ```
+Cost: ~$0.02 per 1M tokens. Best quality.
 
-Then `bb brain --post`. Supported: OpenAI, Azure, Mistral, Cohere, Google AI Studio, Google Vertex AI, NVIDIA NIM, or any OpenAI-compatible endpoint.
+### Google AI Studio (free tier available)
+```json
+{
+  "provider": { "google": { "apiKey": "AIzaSy..." } },
+  "embedding_model": "google/gemini-embedding-001"
+}
+```
+Get a key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Free tier: 1,500 requests/day.
+
+### Mistral
+```json
+{
+  "provider": { "mistral": { "apiKey": "..." } },
+  "embedding_model": "mistral/mistral-embed"
+}
+```
+
+### Cohere
+```json
+{
+  "provider": { "cohere": { "apiKey": "..." } },
+  "embedding_model": "cohere/embed-english-v3.0"
+}
+```
+
+### Any OpenAI-compatible endpoint
+Works with Azure, NVIDIA NIM, Google Vertex AI, self-hosted models, or any service exposing `/v1/embeddings`:
+```json
+{
+  "provider": { "nvidia": { "apiKey": "...", "baseURL": "https://..." } },
+  "embedding_model": "nvidia/nv-embedqa-e5-v5"
+}
+```
+
+After configuring any provider, run `bb brain --post` to regenerate embeddings.
 
 ## Configuration
 
@@ -94,7 +128,9 @@ Config lives in `bb.json` at your project root. This file is **not created autom
 ```json
 {
   "provider": {
-    "openai": { "apiKey": "sk-..." }
+    "openai": { "apiKey": "sk-..." },
+    "google": { "apiKey": "AIzaSy..." },
+    "mistral": { "apiKey": "..." }
   },
   "embedding_model": "openai/text-embedding-3-small"
 }
