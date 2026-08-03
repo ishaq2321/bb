@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-VERSION="${VERSION:-1.0.16}"
+VERSION="${VERSION:-1.0.19}"
 REPO="ishaq2321/bb"
 
 echo "🚀 Installing Backbencher ${VERSION} for $(uname -s)..."
